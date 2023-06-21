@@ -1,27 +1,46 @@
-let com=[0,1,'abc','def','ghi','jkl','mno','pqrs','tuv','wxyz'];
-
-
-function f(ques,comb,res){
-
-    if(ques.length==0){
-      res.push(comb);
-      return;
-    }
-   
-    let dig=parseInt(ques[0]);
-    let curStr=com[dig];
-
-    for(let i=0;i<curStr.length;i++){
-        let curChar=curStr[i];
-        f(ques.substring(1),comb+curChar,res);
-    }
-}
 
 function letterCombinations(input_digit) {
-  //Complete the function
-	let res=[];
-f(input,"",res);
-return res;
+  // Mapping of digit to letters
+  const digitMap = {
+    '2': 'abc',
+    '3': 'def',
+    '4': 'ghi',
+    '5': 'jkl',
+    '6': 'mno',
+    '7': 'pqrs',
+    '8': 'tuv',
+    '9': 'wxyz',
+    '0': '0',
+    '1': '1'
+  };
+
+  // Base case: if the input is an empty string, return an empty array
+  if (input_digit === '') {
+    return [];
+  }
+
+  // Recursive case: generate letter combinations
+  const combinations = [];
+
+  // Recursive function to generate combinations
+  function generateCombinations(currentIndex, currentCombination) {
+    if (currentIndex === input_digit.length) {
+      combinations.push(currentCombination);
+      return;
+    }
+
+    const currentDigit = input_digit[currentIndex];
+    const letters = digitMap[currentDigit];
+
+    for (let i = 0; i < letters.length; i++) {
+      const letter = letters[i];
+      generateCombinations(currentIndex + 1, currentCombination + letter);
+    }
+  }
+
+  generateCombinations(0, '');
+
+  return combinations;
 }
 
 module.exports = letterCombinations;
